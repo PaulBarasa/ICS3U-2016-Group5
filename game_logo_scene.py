@@ -12,20 +12,21 @@ from main_menu_scene import *
 class GameLogoScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
-        
+
         # create timer, so that after 2 seconds move to next scene
         self.start_time = time.time()
-        
+
         # add white background color
         self.background = SpriteNode(position = self.size / 2, 
                                      color = 'white', 
                                      parent = self, 
                                      size = self.size)
+
+        # game logo
         self.game_logo = SpriteNode('./assets/sprites/game_logo.JPG',
                                        parent = self,
                                        position = self.size/2,
                                        )
-    
     def update(self):
         # this method is called, hopefully, 60 times a second
         
