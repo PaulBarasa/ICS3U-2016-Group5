@@ -20,16 +20,16 @@ class OptionsScene(Scene):
                                        scale = 1)
 
         # back button
-        back_button_position = self.size
+        back_button_position = Vector2()
         back_button_position.x = 100
-        back_button_position.y = back_button_position.y - 100
+        back_button_position.y = 924
         self.back_button = SpriteNode('./assets/sprites/left.PNG',
                                        parent = self,
                                        position = back_button_position,
                                        scale = 0.1)
 
         # sound options label
-        sound_options_label_position = self.size
+        sound_options_label_position = Vector2()
         sound_options_label_position.x = 384
         sound_options_label_position.y = 662
         self.sound_options_label = LabelNode(text = 'Sound Options:',
@@ -38,7 +38,7 @@ class OptionsScene(Scene):
                                       position = sound_options_label_position,)
 
         # on button
-        on_button_position = self.size
+        on_button_position = Vector2()
         on_button_position.x = 384
         on_button_position.y = 512
         self.on_button = SpriteNode('./assets/sprites/on.PNG',
@@ -47,7 +47,7 @@ class OptionsScene(Scene):
                                        scale = 0.1)
 
         # off button
-        off_button_position = self.size
+        off_button_position = Vector2()
         off_button_position.x = 384
         off_button_position.y = 362
         self.off_button = SpriteNode('./assets/sprites/off.PNG',
@@ -62,13 +62,17 @@ class OptionsScene(Scene):
     def touch_began(self, touch):
         # this method is called, when user touches the screen
 
-        # creating a pop effect when the button(s) is clicked
+        # creating a pop effect when a button(s) is clicked
+
+        # back button
         if self.back_button.frame.contains_point(touch.location):
             self.back_button.scale = 0.09
 
+        # on button
         if self.on_button.frame.contains_point(touch.location):
             self.on_button.scale = 0.09
 
+        # off button
         if self.off_button.frame.contains_point(touch.location):
             self.off_button.scale = 0.09
 
@@ -79,7 +83,7 @@ class OptionsScene(Scene):
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
 
-        # if back button is pressed, go to main scene
+        # if the back button is pressed, go to the main menu scene
         if self.back_button.frame.contains_point(touch.location):
             self.back_button.scale = 0.1
             sound.play_effect('./assets/sounds/click.wav')

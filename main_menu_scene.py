@@ -64,12 +64,16 @@ class MainMenuScene(Scene):
         # this method is called, when user touches the screen
 
         # creating a pop effect when a button(s) is clicked
+
+        # back button
         if self.options_button.frame.contains_point(touch.location):
             self.options_button.scale = 0.45
 
+        # help button
         if self.help_button.frame.contains_point(touch.location):
             self.help_button.scale = 0.45
 
+        # start button
         if self.start_button.frame.contains_point(touch.location):
             self.start_button.scale = 0.45
 
@@ -80,19 +84,19 @@ class MainMenuScene(Scene):
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
 
-        # if options button is pressed, go to options scene
+        # if the options button is pressed, go to the options scene
         if self.options_button.frame.contains_point(touch.location):
             self.options_button.scale = 0.5
             sound.play_effect('./assets/sounds/click.wav')
             self.present_modal_scene(OptionsScene())
 
-        # if help button is pressed, go to help scene
+        # if the help button is pressed, go to the help scene
         if self.help_button.frame.contains_point(touch.location):
             self.help_button.scale = 0.5
             sound.play_effect('./assets/sounds/click.wav')
             self.present_modal_scene(HelpScene())
 
-        # if start button is pressed, go to game scene
+        # if the start button is pressed, go to the game scene
         if self.start_button.frame.contains_point(touch.location):
             self.start_button.scale = 0.5
             sound.play_effect('./assets/sounds/click.wav')

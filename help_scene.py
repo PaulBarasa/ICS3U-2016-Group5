@@ -21,16 +21,16 @@ class HelpScene(Scene):
                                        scale = 1)
 
         # back button
-        back_button_position = self.size
+        back_button_position = Vector2()
         back_button_position.x = 100
-        back_button_position.y = back_button_position.y - 100
+        back_button_position.y = 924
         self.back_button = SpriteNode('./assets/sprites/left.PNG',
                                        parent = self,
                                        position = back_button_position,
                                        scale = 0.1)
 
         # how to play label
-        how_to_play_label_position = self.size
+        how_to_play_label_position = Vector2()
         how_to_play_label_position.x = 384
         how_to_play_label_position.y = 800
         self.how_to_play_label = LabelNode(text = 'How To Play:',
@@ -39,7 +39,7 @@ class HelpScene(Scene):
                                       position = how_to_play_label_position,)
 
         # controls label
-        controls_label_position = self.size
+        controls_label_position = Vector2()
         controls_label_position.x = 384
         controls_label_position.y = 400
         self.controls_label = LabelNode(text = 'Controls:',
@@ -82,7 +82,7 @@ class HelpScene(Scene):
                                       scale = 0.275)
 
         # credits label
-        credits_label_position = self.size
+        credits_label_position = Vector2()
         credits_label_position.x = 384
         credits_label_position.y = 20
         self.credits_label = LabelNode(text = 'Hockey Shootout was created by Paul Barasa and Rehan Fernando. Special thanks to qubodup, NenadSimic, David McKee, and Erik Streb!',
@@ -97,7 +97,9 @@ class HelpScene(Scene):
     def touch_began(self, touch):
         # this method is called, when user touches the screen
 
-        # creating a pop effect when the button(s) is clicked
+        # creating a pop effect when a button(s) is clicked
+
+        # back button
         if self.back_button.frame.contains_point(touch.location):
             self.back_button.scale = 0.09
 
@@ -108,7 +110,7 @@ class HelpScene(Scene):
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
 
-        # if back button is pressed, go to main scene
+        # if the back button is pressed, go to the main menu scene
         if self.back_button.frame.contains_point(touch.location):
             self.back_button.scale = 0.1
             sound.play_effect('./assets/sounds/click.wav')
