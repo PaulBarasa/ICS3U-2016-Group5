@@ -10,18 +10,19 @@ import sound
 class GameScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
-        self.score_position = Vector2()
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
-        self.pucks = []
+        self.score_position = Vector2()
+        self.score = 0
         self.left_button_down = False
         self.right_button_down = False
         self.player_move_speed = 20.0
-        self.goalie_move_speed = 3.0
+        self.goalie_move_speed = 1.0
+        self.pucks = []
         self.game_over = False
-        self.score = 0
+        self.goalie = True
 
         # add rink background
         self.background = SpriteNode('./assets/sprites/rink.JPG',
@@ -37,15 +38,6 @@ class GameScene(Scene):
                                       parent = self,
                                       position = left_button_position,
                                       scale = 0.1)
-
-        # pause button
-        pause_button_position = Vector2()
-        pause_button_position.x = self.size_of_screen_x - 75
-        pause_button_position.y = 950
-        self.pause_button = SpriteNode('./assets/sprites/pause.PNG',
-                                      parent = self,
-                                      position = pause_button_position,
-                                      scale = 0.075)
 
         # right button
         right_button_position = Vector2()
@@ -85,22 +77,19 @@ class GameScene(Scene):
 
         # goalie
         goalie_start_position = Vector2()
-        goalie_start_position.x = 200
+        goalie_start_position.x = 205
         goalie_start_position.y = 725
 
         goalie_end_position = Vector2()
-        goalie_end_position.x = 575
+        goalie_end_position.x = 565
         goalie_end_position.y = 725
-
-        goalie_end2_position = Vector2()
-        goalie_end2_position.x = 200
-        goalie_end2_position.y = 725
 
         self.goalie = SpriteNode('./assets/sprites/goalie.PNG',
                                     parent = self,
                                     position = goalie_start_position,
                                     scale = 0.15)
-        # make goalie
+
+        # make goalie move
         goalieMoveAction = Action.move_to(goalie_end_position.x, 
                                          goalie_end_position.y,  
                                          self.goalie_move_speed)
@@ -113,6 +102,15 @@ class GameScene(Scene):
                                      font=('Avenir Next Condensed', 40),
                                      parent = self,
                                      position = self.score_position)
+
+        # pause button
+        pause_button_position = Vector2()
+        pause_button_position.x = self.size_of_screen_x - 75
+        pause_button_position.y = 950
+        self.pause_button = SpriteNode('./assets/sprites/pause.PNG',
+                                      parent = self,
+                                      position = pause_button_position,
+                                      scale = 0.075)
 
         # pause scene "illusion"
         self.pause_background = SpriteNode('./assets/sprites/background.JPG',
@@ -131,7 +129,7 @@ class GameScene(Scene):
                                        scale = 0.5,
                                        alpha = 0)
 
-        # menu button
+        # main menu button
         menu_button_position = Vector2()
         menu_button_position.x = 384
         menu_button_position.y = 612
@@ -154,7 +152,7 @@ class GameScene(Scene):
     def update(self):
         # this method is called, hopefully, 60 times a second
 
-        # move player if button down
+        # move the player if the button is down
         if self.left_button_down == True:
             playerMove = Action.move_by(-1*self.player_move_speed, 
                                            0.0, 
@@ -183,18 +181,18 @@ class GameScene(Scene):
         # check every update to see if a puck has hit the goalie
         for puck in self.pucks:
             if self.goalie.frame.intersects(puck.frame):
+                sound.play_effect('./assets/sounds/game_over.wav')
                 puck.remove_from_parent()
                 self.pucks.remove(puck)
                 self.game_over = True
                 self.menu_button.alpha = 1
                 self.pause_background.alpha = 1
                 self.game_over_label.alpha = 1
-                self.resume_button.remove_from_parent()
 
         else:
             pass
 
-        # shows score
+        # show the score
         self.score_label.text = 'Score: ' + str(self.score)
 
     def touch_began(self, touch):
@@ -245,19 +243,19 @@ class GameScene(Scene):
             self.pause_background.alpha = 1
             self.menu_button.alpha = 1
             self.resume_button.alpha = 1
-            #self.shoot_button = False
 
         # resume button
         if self.resume_button.frame.contains_point(touch.location):
+            sound.play_effect('./assets/sounds/click.wav')
             self.resume_button.scale = 0.5
             self.pause_background.alpha = 0
             self.resume_button.alpha = 0
             self.menu_button.alpha = 0
             self.game_over_label.alpha = 0
-            #self.shoot_button = True
 
         # main menu button
         if self.menu_button.frame.contains_point(touch.location):
+            sound.play_effect('./assets/sounds/click.wav')
             self.menu_button.scale = 0.5
             self.dismiss_modal_scene()
 
