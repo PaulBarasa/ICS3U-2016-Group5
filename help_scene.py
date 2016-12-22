@@ -84,7 +84,7 @@ class HelpScene(Scene):
         # credits label
         credits_label_position = Vector2()
         credits_label_position.x = 384
-        credits_label_position.y = 20
+        credits_label_position.y = 28
         self.credits_label = LabelNode(text = 'Hockey Shootout was created by Paul Barasa and Rehan Fernando. Special thanks to qubodup, NenadSimic, David McKee, and Erik Streb!',
                                       font=('Avenir Next Condensed', 15),
                                       parent = self,

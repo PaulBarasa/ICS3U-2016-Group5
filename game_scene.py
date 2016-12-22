@@ -123,6 +123,7 @@ class GameScene(Scene):
         self.score_position.x = 384
         self.score_position.y = 30
         self.score_label = LabelNode(text = 'Score: 0',
+                                     color = 'red',
                                      font=('Avenir Next Condensed', 40),
                                      parent = self,
                                      position = self.score_position)
@@ -164,7 +165,7 @@ class GameScene(Scene):
                 self.goalie.position.x = self.rightBound
                 self.movingLeft = True
 
-        # check every update if a puck is off the screen
+        # check every update to see if a puck is off the screen
         for puck in self.pucks:
             if puck.position.y > self.size_of_screen_y + 50:
                 puck.remove_from_parent()
@@ -198,7 +199,7 @@ class GameScene(Scene):
     def touch_began(self, touch):
         # this method is called, when user touches the screen
 
-        # # creating a pop effect when a button(s) is clicked
+        # creating a pop effect when a button(s) is clicked
 
         # exit button
         if self.exit_button.frame.contains_point(touch.location):
