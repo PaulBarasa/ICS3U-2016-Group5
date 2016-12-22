@@ -17,8 +17,11 @@ class GameScene(Scene):
         self.left_button_down = False
         self.right_button_down = False
         self.game_over = False
+        self.movingLeft = True
+        self.leftBound = 205
+        self.rightBound = 565
         self.player_move_speed = 20.0
-        self.goalie_move_speed = 1.0
+        self.goalie_move_speed = 17.5
         self.score = 0
         self.pucks = []
 
@@ -83,24 +86,11 @@ class GameScene(Scene):
                                     scale = 0.15)
 
         # goalie
-        goalie_start_position = Vector2()
-        goalie_start_position.x = 205
-        goalie_start_position.y = 725
-
-        goalie_end_position = Vector2()
-        goalie_end_position.x = 565
-        goalie_end_position.y = 725
-
+        goalie_position = Vector2(565, 725)
         self.goalie = SpriteNode('./assets/sprites/goalie.PNG',
                                     parent = self,
-                                    position = goalie_start_position,
+                                    position = goalie_position,
                                     scale = 0.15)
-
-        # make goalie move
-        goalieMoveAction = Action.move_to(goalie_end_position.x, 
-                                         goalie_end_position.y,  
-                                         self.goalie_move_speed)
-        self.goalie.run_action(goalieMoveAction)
 
         # game over scene "illusion"
         self.game_over_background = SpriteNode('./assets/sprites/background.JPG',
@@ -155,6 +145,25 @@ class GameScene(Scene):
                                            0.1)
                 self.player.run_action(playerMove)
 
+        # making the goalie move
+        if self.movingLeft == True:
+            goalieMove = Action.move_by(-1*self.goalie_move_speed, 
+                                           0.0, 
+                                           0.1)
+            self.goalie.run_action(goalieMove)
+            if self.goalie.position.x < self.leftBound:
+                self.goalie.position.x = self.leftBound
+                self.movingLeft = False
+
+        if self.movingLeft == False:
+            goalieMove = Action.move_by(1*self.goalie_move_speed, 
+                                           0.0, 
+                                           0.1)
+            self.goalie.run_action(goalieMove)
+            if self.goalie.position.x > self.rightBound:
+                self.goalie.position.x = self.rightBound
+                self.movingLeft = True
+
         # check every update if a puck is off the screen
         for puck in self.pucks:
             if puck.position.y > self.size_of_screen_y + 50:
@@ -166,6 +175,7 @@ class GameScene(Scene):
             if self.net.frame.contains_rect(puck.frame):
                 puck.remove_from_parent()
                 self.pucks.remove(puck)
+                sound.play_effect('./assets/sounds/goal.wav')
                 self.score = self.score + 1
 
         # check every update to see if a puck has hit the goalie
@@ -227,7 +237,7 @@ class GameScene(Scene):
             self.right_button.scale = 0.1
 
         if self.shoot_button.frame.contains_point(touch.location):
-            sound.play_effect('./assets/sounds/puck.wav')
+            sound.play_effect('./assets/sounds/click.wav')
             self.shoot_button.scale = 0.1
 
         # main menu button
