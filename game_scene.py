@@ -20,8 +20,8 @@ class GameScene(Scene):
         self.movingLeft = True
         self.leftBound = 205
         self.rightBound = 565
-        self.player_move_speed = 20.0
-        self.goalie_move_speed = 17.5
+        self.player_move_speed = 35.0
+        self.goalie_move_speed = 25.0
         self.score = 0
         self.pucks = []
 
@@ -132,14 +132,14 @@ class GameScene(Scene):
         # this method is called, hopefully, 60 times a second
 
         # move the player if the button is down
-        if (self.player.position.x - self.player_move_speed)> 80:
+        if (self.player.position.x - self.player_move_speed)> 70:
             if self.left_button_down == True:
                 playerMove = Action.move_by(-1*self.player_move_speed, 
                                            0.0, 
                                            0.1)
                 self.player.run_action(playerMove)
 
-        if (self.player.position.x + self.player_move_speed) < self.size_of_screen_x-80:
+        if (self.player.position.x + self.player_move_speed) < self.size_of_screen_x-70:
             if self.right_button_down == True:
                 playerMove = Action.move_by(self.player_move_speed, 
                                            0.0, 
@@ -277,5 +277,5 @@ class GameScene(Scene):
         # make the puck move forward
         puckMoveAction = Action.move_to(puck_end_position.x, 
                                            puck_end_position.y + 100, 
-                                           5.0)
+                                           3.0)
         self.pucks[len(self.pucks)-1].run_action(puckMoveAction)
