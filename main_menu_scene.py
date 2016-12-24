@@ -47,7 +47,7 @@ class MainMenuScene(Scene):
         # help button
         help_button_position = Vector2()
         help_button_position.x = self.screen_center_x
-        help_button_position.y = self.screen_center_y * 0.5975
+        help_button_position.y = self.screen_center_y * 0.6
         self.help_button = SpriteNode('./assets/sprites/help.PNG',
                                       parent = self,
                                       position = help_button_position,
@@ -56,7 +56,7 @@ class MainMenuScene(Scene):
         # options button
         options_button_position = Vector2()
         options_button_position.x = self.screen_center_x
-        options_button_position.y = 100
+        options_button_position.y = self.screen_center_y * 0.2
         self.options_button = SpriteNode('./assets/sprites/options.PNG',
                                       parent = self,
                                       position = options_button_position,
