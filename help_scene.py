@@ -42,7 +42,7 @@ class HelpScene(Scene):
                                       parent = self,
                                       position = how_to_play_label_position)
 
-        # rules
+        # the rules
         rules_position = Vector2()
         rules_position.x = self.screen_center_x
         rules_position.y = self.screen_center_y * 1.19

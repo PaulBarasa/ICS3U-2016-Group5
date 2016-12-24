@@ -4,9 +4,9 @@
 # This scene shows the main menu scene
 
 from scene import *
+from game_scene import *
 from help_scene import *
 from options_scene import *
-from game_scene import *
 import ui
 import sound
 
