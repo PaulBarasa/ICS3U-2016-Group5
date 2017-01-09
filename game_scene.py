@@ -201,7 +201,7 @@ class GameScene(Scene):
                 defender.remove_from_parent()
                 self.defender.remove(defender)
 
-        # limits you to one puck at a time
+        # limits you to one puck on the screen
         if len(self.pucks) > 0:
              self.shoot_button_down = False
 
