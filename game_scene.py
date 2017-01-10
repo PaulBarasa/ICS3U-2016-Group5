@@ -15,11 +15,6 @@ class GameScene(Scene):
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
-        self.left_button_down = False
-        self.right_button_down = False
-        self.shoot_button_down = False
-        self.game_over = False
-        self.movingLeft = True
         self.leftBound = self.screen_center_x * 0.5
         self.rightBound = self.screen_center_x * 1.45
         self.player_move_speed = 30
@@ -27,6 +22,15 @@ class GameScene(Scene):
         self.defender_attack_speed = 10
         self.defender_attack_rate = 1
         self.score = 0
+
+        # true and false statements
+        self.left_button_down = False
+        self.right_button_down = False
+        self.shoot_button_down = False
+        self.movingLeft = True
+        self.game_over = False
+
+        # arrays
         self.pucks = []
         self.defender = []
 
@@ -139,7 +143,7 @@ class GameScene(Scene):
                                      position = self.score_position)
 
     def update(self):
-        # makes the player move
+        # makes the player move left
         if (self.player.position.x - self.player_move_speed) > (self.screen_center_x * 0.25):
             if self.left_button_down == True:
                 playerMove = Action.move_by(-1 * self.player_move_speed, 
@@ -147,6 +151,7 @@ class GameScene(Scene):
                                            0.1)
                 self.player.run_action(playerMove)
 
+        # makes the player move right
         if (self.player.position.x + self.player_move_speed) < self.size_of_screen_x - (self.screen_center_x * 0.25):
             if self.right_button_down == True:
                 playerMove = Action.move_by(self.player_move_speed, 
@@ -262,15 +267,17 @@ class GameScene(Scene):
         if self.exit_button.frame.contains_point(touch.location):
             self.exit_button.scale = 0.09
 
-        # controls
+        # left button
         if self.left_button.frame.contains_point(touch.location):
             self.left_button.scale = 0.09
             self.left_button_down = True
 
+        # right button
         if self.right_button.frame.contains_point(touch.location):
             self.right_button.scale = 0.09
             self.right_button_down = True
 
+        # shoot button
         if self.shoot_button.frame.contains_point(touch.location):
             self.shoot_button.scale = 0.09
             self.shoot_button_down = True
@@ -286,13 +293,15 @@ class GameScene(Scene):
             sound.play_effect('./assets/sounds/click.wav')
             self.dismiss_modal_scene()
 
-        # controls
+        # left button
         if self.left_button.frame.contains_point(touch.location):
             self.left_button.scale = 0.1
 
+        # right button
         if self.right_button.frame.contains_point(touch.location):
             self.right_button.scale = 0.1
 
+        # shoot button
         if self.shoot_button.frame.contains_point(touch.location):
             sound.play_effect('./assets/sounds/click.wav')
             self.shoot_button.scale = 0.1
@@ -304,7 +313,7 @@ class GameScene(Scene):
                 self.menu_button.scale = 0.5
                 self.dismiss_modal_scene()
 
-        # shoots the puck
+        # shoots a puck
         if self.shoot_button.frame.contains_point(touch.location):
             # only shoot if it is not game over
             if self.game_over == False:
@@ -317,7 +326,7 @@ class GameScene(Scene):
             self.right_button_down = False
 
     def create_new_puck(self):
-        # creates the puck
+        # creates a puck
         puck_start_position = Vector2()
         puck_start_position.x = self.player.position.x
         puck_start_position.y = self.screen_center_y * 0.55
@@ -326,12 +335,13 @@ class GameScene(Scene):
         puck_end_position.x = puck_start_position.x
         puck_end_position.y = self.size_of_screen_y + 100
 
+        # puck
         self.pucks.append(SpriteNode('./assets/sprites/puck.png',
                              position = puck_start_position,
                              parent = self,
                              scale = 0.05))
 
-        # makes the puck move forward
+        # makes a puck move forward
         puckMoveAction = Action.move_to(puck_end_position.x, 
                                            puck_end_position.y + 100, 
                                            2.5)
@@ -348,13 +358,14 @@ class GameScene(Scene):
         defender_end_position.x = self.player.position.x
         defender_end_position.y = -100
 
+        # defender
         self.defender.append(SpriteNode('./assets/sprites/defender.PNG',
                              position = defender_start_position,
                              parent = self,
                              scale = 0.125,
                              alpha = 0.8))
 
-        # makes the defender move downward
+        # makes a defender move downward
         defenderMoveAction = Action.move_to(defender_end_position.x, 
                                          defender_end_position.y, 
                                          self.defender_attack_speed,
