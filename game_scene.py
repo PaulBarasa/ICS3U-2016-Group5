@@ -31,8 +31,8 @@ class GameScene(Scene):
         self.game_over = False
 
         # arrays
-        self.pucks = []
         self.defender = []
+        self.pucks = []
 
         # add rink background
         rink_background_position = Vector2(self.screen_center_x, 
