@@ -10,7 +10,7 @@ import random
 
 class GameScene(Scene):
     def setup(self):
-        # constants 
+        # constants and variables
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
